@@ -2,27 +2,19 @@
 
 namespace App\Livewire;
 
-use App\Models\Ticket;
-use Illuminate\Contracts\View\Factory;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\WithPagination;
 
 class TicketList extends Component
 {
-    public function render(): Factory|\Illuminate\Contracts\View\View|View
-    {
-        $user = Auth::user();
+    use WithPagination;
 
-        if ($user->isAdmin()) {
-            $tickets = Ticket::with('user')
-                ->latest()
-                ->get();
-        } else {
-            $tickets = $user->tickets()
-                ->latest()
-                ->get();
-        }
+    public function render()
+    {
+        $tickets = Auth::user()->tickets()
+            ->latest()
+            ->paginate(10);
 
         return view('livewire.ticket-list', [
             'tickets' => $tickets,
