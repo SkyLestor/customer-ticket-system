@@ -13,7 +13,7 @@ enum TicketPriority: string
         return match ($this) {
             self::LOW => 'Low Priority',
             self::MEDIUM => 'Medium Priority',
-            self::HIGH => 'Critical',
+            self::HIGH => 'Critical Priority',
         };
     }
 }
