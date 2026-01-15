@@ -29,12 +29,9 @@
                 </div>
             </div>
 
-            {{-- 2. The Advanced List --}}
             <div class="bg-white dark:bg-gray-800 overflow-hidden shadow-sm sm:rounded-lg p-6">
                 <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Manage Tickets</h3>
-
-                {{-- We will create a specialized 'AdminTicketList' next --}}
-                <livewire:ticket-list/>
+                <livewire:admin-ticket-list />
             </div>
 
         </div>
