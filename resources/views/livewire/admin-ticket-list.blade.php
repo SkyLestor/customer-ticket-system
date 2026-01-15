@@ -1,3 +1,4 @@
+@php use App\Enums\TicketPriority;use App\Enums\TicketStatus; @endphp
 <div class="space-y-6">
 
     {{-- Toolbar: Search & Filter --}}
@@ -39,13 +40,13 @@
                 class="block w-full sm:w-48 pl-3 pr-10 py-2 text-base border-gray-300 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 sm:text-sm rounded-md dark:bg-gray-900 dark:text-white dark:border-gray-700"
             >
                 <option value="">All Statuses</option>
-                <option value="open">Open</option>
-                <option value="closed">Closed</option>
+                <option value="{{ TicketStatus::OPEN }}">Open</option>
+                <option value="{{ TicketStatus::CLOSED }}">Closed</option>
             </select>
 
         </div>
     </div>
-    
+
     {{-- Data Table --}}
     <div
         class="bg-white dark:bg-gray-800 shadow overflow-hidden sm:rounded-lg border border-gray-200 dark:border-gray-700">
@@ -113,14 +114,15 @@
                     {{-- Status --}}
                     <td class="px-6 py-4 whitespace-nowrap">
                             <span class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full
-                                {{ $ticket->status === 'open' ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }}">
+                                {{ $ticket->status === TicketStatus::OPEN ? 'bg-green-100 text-green-800 dark:bg-green-900 dark:text-green-200' : 'bg-gray-100 text-gray-800 dark:bg-gray-700 dark:text-gray-300' }}">
                                 {{ $ticket->status->label() }}
                             </span>
                     </td>
 
                     {{-- Priority --}}
                     <td class="px-6 py-4 whitespace-nowrap text-sm text-gray-500 dark:text-gray-400">
-                             <span class="{{ $ticket->priority === 'high' ? 'text-red-600 font-bold' : '' }}">
+                             <span
+                                 class="{{ $ticket->priority === TicketPriority::HIGH ? 'text-red-600 font-bold' : '' }}">
                                 {{ $ticket->priority->label() }}
                             </span>
                     </td>
@@ -134,7 +136,7 @@
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
                         <button wire:click="toggleStatus({{ $ticket->id }})"
                                 class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
-                            {{ $ticket->status->label() === 'Open' ? 'Close' : 'Reopen' }}
+                            {{ $ticket->status === TicketStatus::OPEN ? 'Close' : 'Reopen' }}
                         </button>
                     </td>
                 </tr>
