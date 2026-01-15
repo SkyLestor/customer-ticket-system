@@ -7,6 +7,7 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\View\View;
 use Livewire\Component;
+use Livewire\Features\SupportRedirects\Redirector;
 use Livewire\WithFileUploads;
 
 class CreateTicketForm extends Component
@@ -28,7 +29,7 @@ class CreateTicketForm extends Component
         'attachment' => 'nullable|file|max:10240',
     ];
 
-    public function save(): RedirectResponse
+    public function save(): RedirectResponse|Redirector
     {
         $this->validate();
 
