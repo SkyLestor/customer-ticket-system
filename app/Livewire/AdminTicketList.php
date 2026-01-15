@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enums\TicketStatus;
 use App\Models\Ticket;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -29,6 +30,15 @@ class AdminTicketList extends Component
     public function updatedPriority(): void
     {
         $this->resetPage();
+    }
+
+    public function toggleStatus(Ticket $ticket): void
+    {
+        $ticket->status = $ticket->status === TicketStatus::OPEN
+            ? TicketStatus::CLOSED
+            : TicketStatus::OPEN;
+
+        $ticket->save();
     }
 
     public function render()
