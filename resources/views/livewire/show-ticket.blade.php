@@ -51,4 +51,9 @@
             </ul>
         </div>
     @endif
+
+    <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
+        <livewire:ticket-comments :ticket="$ticket"/>
+    </div>
+
 </div>
