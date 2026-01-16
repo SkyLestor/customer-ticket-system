@@ -41,4 +41,9 @@ class Ticket extends Model
     {
         return 'uuid';
     }
+
+    public function comments(): HasMany|Comment
+    {
+        return $this->hasMany(Comment::class);
+    }
 }
