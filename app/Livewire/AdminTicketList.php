@@ -41,6 +41,11 @@ class AdminTicketList extends Component
         $ticket->save();
     }
 
+    public function showTicket($url)
+    {
+        return $this->redirect($url);
+    }
+
     public function render()
     {
         $query = Ticket::with('user')->latest();

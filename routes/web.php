@@ -16,9 +16,15 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::view('dashboard', 'dashboard')
         ->name('dashboard');
 
+    Route::get('/show/{ticket}', [TicketController::class, 'show'])
+        ->name('ticket.show');
+
     Route::middleware(['admin'])->prefix('admin')->group(function () {
-        Route::get('/dashboard', [AdminController::class, 'index'])->name('admin.dashboard');
+
+        Route::get('/dashboard', [AdminController::class, 'index'])
+            ->name('admin.dashboard');
+
     });
 });
 
-require __DIR__.'/settings.php';
+require __DIR__ . '/settings.php';

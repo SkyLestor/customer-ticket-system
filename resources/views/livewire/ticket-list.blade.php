@@ -1,5 +1,4 @@
 @php use App\Enums\TicketStatus; @endphp
-@php use const App\Enums\OPEN; @endphp
 <div class="space-y-6">
     <div class="flex justify-between items-center">
         <h2 class="text-xl font-semibold text-gray-800 dark:text-white">My Support Tickets</h2>
@@ -44,7 +43,7 @@
                             {{ $ticket->created_at->diffForHumans() }}
                         </td>
                         <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                            <a href="#" class="text-indigo-600 hover:text-indigo-900">View</a>
+                            <a href="{{route('ticket.show', $ticket)}}" class="text-indigo-600 hover:text-indigo-900">View</a>
                         </td>
                     </tr>
                 @endforeach

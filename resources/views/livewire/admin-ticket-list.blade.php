@@ -80,7 +80,9 @@
             </thead>
             <tbody class="bg-white dark:bg-gray-800 divide-y divide-gray-200 dark:divide-gray-700">
             @forelse ($tickets as $ticket)
-                <tr class="hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-150 ease-in-out">
+                <tr
+                    wire:click="showTicket('{{ route('ticket.show', $ticket) }}')"
+                    class="hover:bg-gray-50 dark:hover:bg-gray-700 transition duration-150 ease-in-out">
                     {{-- Title --}}
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="text-sm font-medium text-gray-900 dark:text-white">
@@ -94,7 +96,7 @@
                     {{-- User --}}
                     <td class="px-6 py-4 whitespace-nowrap">
                         <div class="flex items-center">
-                            <div class="flex-shrink-0 h-8 w-8">
+                            <div class="shrink-0 h-8 w-8">
                                 <div
                                     class="h-8 w-8 rounded-full bg-indigo-100 flex items-center justify-center text-indigo-500 font-bold text-xs">
                                     {{ substr($ticket->user->name, 0, 1) }}
@@ -134,7 +136,7 @@
 
                     {{-- Actions --}}
                     <td class="px-6 py-4 whitespace-nowrap text-right text-sm font-medium">
-                        <button wire:click="toggleStatus({{ $ticket->id }})"
+                        <button wire:click.stop="toggleStatus('{{ $ticket->uuid }}')"
                                 class="text-indigo-600 hover:text-indigo-900 dark:text-indigo-400 dark:hover:text-indigo-300">
                             {{ $ticket->status === TicketStatus::OPEN ? 'Close' : 'Reopen' }}
                         </button>
