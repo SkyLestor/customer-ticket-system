@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Enums\TicketStatus;
 use App\Jobs\SendTicketCreatedEmail;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
@@ -38,7 +39,7 @@ class CreateTicketForm extends Component
             'title' => $this->title,
             'description' => $this->description,
             'priority' => $this->priority,
-            'status' => 'open',
+            'status' => TicketStatus::OPEN,
         ]);
 
         if ($this->attachment) {

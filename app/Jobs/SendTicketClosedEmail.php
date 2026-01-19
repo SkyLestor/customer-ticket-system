@@ -4,7 +4,6 @@ namespace App\Jobs;
 
 use App\Mail\TicketClosed;
 use App\Models\Ticket;
-use App\Models\User;
 use Illuminate\Contracts\Queue\ShouldQueue;
 use Illuminate\Foundation\Queue\Queueable;
 use Illuminate\Support\Facades\Mail;
@@ -26,9 +25,9 @@ class SendTicketClosedEmail implements ShouldQueue
      */
     public function handle(): void
     {
-        $ticketCreator = User::where('id', $this->ticket->user_id)->first();
-        if ($ticketCreator) {
-            Mail::to($ticketCreator)->send(new TicketClosed($this->ticket));
+        $user = $this->ticket->user;
+        if ($user) {
+            Mail::to($user)->send(new TicketClosed($this->ticket));
         }
     }
 }
