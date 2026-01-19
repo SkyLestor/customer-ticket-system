@@ -10,7 +10,7 @@
 
     <flux:textarea wire:model="description" label="Description" rows="4" placeholder="Describe your issue..."/>
 
-    <flux:input type="file" wire:model="attachment" label="Attachment (Optional)"/>
+    <flux:input type="file" wire:model="attachments" multiple label="Attachment (Optional)"/>
 
     <div class="flex justify-end">
         <flux:button variant="primary" type="submit">Submit Ticket</flux:button>

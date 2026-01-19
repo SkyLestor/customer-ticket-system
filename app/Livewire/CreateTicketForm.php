@@ -22,13 +22,14 @@ class CreateTicketForm extends Component
 
     public $priority = 'low';
 
-    public $attachment;
+    public $attachments = [];
 
     protected $rules = [
         'title' => 'required|min:3',
         'description' => 'required|min:10',
         'priority' => 'required',
-        'attachment' => 'nullable|file|max:10240',
+        'attachments' => 'array|max:7',
+        'attachments.*' => 'file|max:10240',
     ];
 
     public function save(): RedirectResponse|Redirector
@@ -42,12 +43,15 @@ class CreateTicketForm extends Component
             'status' => TicketStatus::OPEN,
         ]);
 
-        if ($this->attachment) {
-            $ticket->attachments()->create([
-                'file_path' => $this->attachment->store('attachments'),
-                'file_name' => $this->attachment->getClientOriginalName(),
-            ]);
+        foreach ($this->attachments as $attachment) {
+            if ($attachment) {
+                $ticket->attachments()->create([
+                    'file_path' => $attachment->store('attachments'),
+                    'file_name' => $attachment->getClientOriginalName(),
+                ]);
+            }
         }
+
 
         SendTicketCreatedEmail::dispatch($ticket);
 
