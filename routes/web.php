@@ -15,6 +15,10 @@ Route::middleware(['auth', 'verified'])->group(function () {
     Route::get('/show/{ticket}', [TicketController::class, 'show'])
         ->name('ticket.show');
 
+    Route::get('/attachment/{attachment}', [TicketController::class, 'download'])
+        ->name('attachment.download');
+
+
     Route::middleware(['admin'])->prefix('admin')->group(function () {
 
     });

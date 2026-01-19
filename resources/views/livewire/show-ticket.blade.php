@@ -29,26 +29,45 @@
             {{ $ticket->description }}
         </div>
     </div>
-
     {{-- Attachments Section --}}
     @if($ticket->attachments->count() > 0)
         <div class="bg-white dark:bg-gray-800 shadow sm:rounded-lg p-6">
             <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-4">Attachments</h3>
-            <ul class="grid grid-cols-1 sm:grid-cols-2 gap-4">
+
+            <div class="grid grid-cols-2 md:grid-cols-3 gap-4">
                 @foreach($ticket->attachments as $attachment)
-                    <li class="flex items-center justify-between p-3 border border-gray-200 dark:border-gray-700 rounded-md">
-                        <div class="flex items-center truncate">
-                            <svg class="w-5 h-5 text-gray-400 mr-2" fill="none" stroke="currentColor"
-                                 viewBox="0 0 24 24">
-                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-                                      d="M15.172 7l-6.586 6.586a2 2 0 102.828 2.828l6.414-6.586a4 4 0 00-5.656-5.656l-6.415 6.585a6 6 0 108.486 8.486L20.5 13"></path>
-                            </svg>
-                            <span
-                                class="text-sm text-gray-600 dark:text-gray-300 truncate">{{ $attachment->file_name }}</span>
+                    @if($attachment->is_image)
+                        {{-- Image Preview --}}
+                        <div
+                            class="group relative aspect-video bg-gray-100 dark:bg-gray-700 rounded-lg overflow-hidden border border-gray-200 dark:border-gray-600">
+                            <img src="{{ $attachment->url }}" alt="{{ $attachment->file_name }}"
+                                 class="object-cover w-full h-full">
+
+                            {{-- Hover Overlay to Download --}}
+                            <a href="{{ $attachment->url }}" target="_blank"
+                               class="absolute inset-0 bg-black bg-opacity-0 group-hover:bg-opacity-30 transition-all flex items-center justify-center opacity-0 group-hover:opacity-100">
+                                <svg class="w-8 h-8 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                          d="M4 16v1a3 3 0 003 3h10a3 3 0 003-3v-1m-4-4l-4 4m0 0l-4-4m4 4V4"></path>
+                                </svg>
+                            </a>
                         </div>
-                    </li>
+                    @else
+                        {{-- File Download Card --}}
+                        <a href="{{ $attachment->url }}"
+                           class="flex items-center p-4 border border-gray-200 dark:border-gray-600 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-700 transition">
+                            <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
+                                      d="M7 21h10a2 2 0 002-2V9.414a1 1 0 00-.293-.707l-5.414-5.414A1 1 0 0012.586 3H7a2 2 0 00-2 2v14a2 2 0 002 2z"></path>
+                            </svg>
+                            <div class="ml-3 overflow-hidden">
+                                <p class="text-sm font-medium text-gray-900 dark:text-white truncate">{{ $attachment->file_name }}</p>
+                                <p class="text-xs text-gray-500">Download</p>
+                            </div>
+                        </a>
+                    @endif
                 @endforeach
-            </ul>
+            </div>
         </div>
     @endif
 
