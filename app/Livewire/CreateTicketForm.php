@@ -2,6 +2,7 @@
 
 namespace App\Livewire;
 
+use App\Jobs\SendTicketCreatedEmail;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
@@ -46,6 +47,8 @@ class CreateTicketForm extends Component
                 'file_name' => $this->attachment->getClientOriginalName(),
             ]);
         }
+
+        SendTicketCreatedEmail::dispatch($ticket);
 
         return redirect()->route('dashboard');
     }

@@ -3,6 +3,7 @@
 namespace App\Livewire;
 
 use App\Enums\TicketStatus;
+use App\Jobs\SendTicketClosedEmail;
 use App\Models\Ticket;
 use Livewire\Component;
 use Livewire\WithPagination;
@@ -39,6 +40,9 @@ class AdminTicketList extends Component
             : TicketStatus::OPEN;
 
         $ticket->save();
+        if ($ticket->status === TicketStatus::CLOSED) {
+            SendTicketClosedEmail::dispatch($ticket);
+        }
     }
 
     public function showTicket($url)
