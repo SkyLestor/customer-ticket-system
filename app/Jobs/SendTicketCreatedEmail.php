@@ -2,6 +2,7 @@
 
 namespace App\Jobs;
 
+use App\Enums\UserRole;
 use App\Mail\TicketCreated;
 use App\Models\Ticket;
 use App\Models\User;
@@ -26,7 +27,7 @@ class SendTicketCreatedEmail implements ShouldQueue
      */
     public function handle(): void
     {
-        $admins = User::where('role', 'admin')->get();
+        $admins = User::where('role', UserRole::ADMIN)->get();
 
         foreach ($admins as $admin) {
             Mail::to($admin)->send(new TicketCreated($this->ticket));
